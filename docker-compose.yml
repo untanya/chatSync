@@ -1,0 +1,47 @@
+services:
+  app:
+    build: .
+    container_name: chatsync-app
+    depends_on:
+      - mysqldb
+    environment:
+      NODE_ENV: development
+      DB_HOST: mysqldb
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: ""
+      DB_NAME: chat_sync
+      PORT: 8080
+      HOST: "0.0.0.0"
+    ports:
+      - "8080:8080"
+      - "9229:9229"
+    tty: true
+    volumes:
+      - .:/app
+      - /app/node_modules
+    entrypoint: npm run dev
+    networks:
+      - app-network
+    restart: always
+  
+  mysqldb:
+    image: mysql:8.0
+    container_name: mysqldb
+    restart: unless-stopped
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      MYSQL_DATABASE: chat_sync
+    ports:
+      - "3307:3306"
+    networks:
+      - app-network
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
+
+networks:
+  app-network:
+    driver: bridge

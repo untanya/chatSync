@@ -3,10 +3,10 @@
 #------------------------------------------------------------
 
 #------------------------------------------------------------
-# Table: messages
+# Table: message
 #------------------------------------------------------------
 
-CREATE TABLE messages(
+CREATE TABLE message(
         id          Int  Auto_increment  NOT NULL ,
         content     Varchar (255) NOT NULL ,
         timestamp   TimeStamp NOT NULL ,
@@ -73,24 +73,23 @@ CREATE TABLE applies_pricing(
 )ENGINE=InnoDB;
 
 #------------------------------------------------------------
-# Table: users
+# Table: user
 #------------------------------------------------------------
 
-CREATE TABLE users(
+CREATE TABLE user(
         id           Int  Auto_increment  NOT NULL ,
         pseudo       Varchar (255) ,
         contact_info Varchar (255) NOT NULL ,
         base_city    Varchar (255) NOT NULL ,
         token        Varchar (255) NOT NULL ,
-        id_users     Int NOT NULL,
     CONSTRAINT users_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
 #------------------------------------------------------------
-# Table: conversations
+# Table: conversation
 #------------------------------------------------------------
 
-CREATE TABLE conversations(
+CREATE TABLE conversation(
         id          Int NOT NULL ,
         id_messages Int NOT NULL ,
         id_model    Int NOT NULL ,
@@ -119,22 +118,17 @@ ALTER TABLE applies_pricing
     FOREIGN KEY (id_model)
     REFERENCES model(id);
 
-ALTER TABLE users
-    ADD CONSTRAINT users_users0_FK
-    FOREIGN KEY (id_users)
-    REFERENCES users(id);
-
-ALTER TABLE conversations
+ALTER TABLE conversation
     ADD CONSTRAINT conversations_users0_FK
     FOREIGN KEY (id)
     REFERENCES users(id);
 
-ALTER TABLE conversations
+ALTER TABLE conversation
     ADD CONSTRAINT conversations_messages1_FK
     FOREIGN KEY (id_messages)
     REFERENCES messages(id);
 
-ALTER TABLE conversations
+ALTER TABLE conversation
     ADD CONSTRAINT conversations_model2_FK
     FOREIGN KEY (id_model)
     REFERENCES model(id);

@@ -1,0 +1,54 @@
+{
+  "name": "chatsync",
+  "version": "1.0.0",
+  "description": "streaming site with a custom chatbox",
+  "main": "server.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch --loader ts-node/esm src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/untanya/chatSync.git"
+  },
+  "author": "unTanya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/untanya/chatSync/issues"
+  },
+  "homepage": "https://github.com/untanya/chatSync#readme",
+  "dependencies": {
+    "@mikro-orm/core": "^6.4.6",
+    "@mikro-orm/entity-generator": "^6.4.6",
+    "@mikro-orm/migrations": "^6.4.6",
+    "@mikro-orm/mysql": "^6.4.6",
+    "@mikro-orm/reflection": "^6.4.6",
+    "@mikro-orm/seeder": "^6.4.6",
+    "@mikro-orm/sql-highlighter": "^1.0.1",
+    "@types/cors": "^2.8.17",
+    "adbkit": "^2.11.1",
+    "axios": "^1.7.9",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "glob": "^11.0.1",
+    "mysql2": "^3.12.0",
+    "puppeteer": "^24.2.1",
+    "reflect-metadata": "^0.2.2",
+    "rimraf": "^6.0.1",
+    "telegram": "^2.26.22",
+    "whatsapp-web.js": "^1.26.0",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@mikro-orm/cli": "^6.4.6",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.4",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}
