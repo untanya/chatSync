@@ -22,7 +22,7 @@ export interface Services {
   appliesPricingRepo: EntityRepository<AppliesPricing>;
   modelRepo: EntityRepository<Model>;
   pricingRepo: EntityRepository<Pricing>;
-  serviceCatalog: EntityRepository<ServicesCatalog>;
+  serviceCatalogRepo: EntityRepository<ServicesCatalog>;
 }
 
 let cache: Services | null = null;
@@ -48,7 +48,7 @@ export async function initORM(options?: Options): Promise<Services> {
         appliesPricingRepo: orm.em.getRepository(AppliesPricing),
         modelRepo: orm.em.getRepository(Model),
         pricingRepo: orm.em.getRepository(Pricing),
-        serviceCatalog: orm.em.getRepository(ServicesCatalog),
+        serviceCatalogRepo: orm.em.getRepository(ServicesCatalog),
       };
       logger.info("✅ MikroORM initialisé avec succès !");
       return cache;

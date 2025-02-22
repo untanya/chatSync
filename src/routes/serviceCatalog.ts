@@ -1,14 +1,15 @@
 import { Router } from "express";
 import { initORM } from "../config/db.js";
-import { ServicesCatalog } from "../modules/service_catalog/service_catalog.entity.js"; 
+import { ServicesCatalog } from "../modules/service_catalog/service_catalog.entity.js";
+import { updateEntity, patchEntity } from "../controllers/dataHandler.js";
 
 const router = Router();
 
 router.post("/", async (req, res) => {
   try {
-    const { em, serviceCatalog } = await initORM();
+    const { em, serviceCatalogRepo } = await initORM();
     const { name, service_rate, pricing } = req.body;
-    const service = serviceCatalog.create({ name, service_rate, pricing });
+    const service = serviceCatalogRepo.create({ name, service_rate, pricing });
     await em.persistAndFlush(service);
     res.status(201).json(service);
   } catch (error) {
@@ -46,16 +47,19 @@ router.get("/:service", async (req, res): Promise<any> => {
   }
 });
 
+router.put("/service-catalog/:id", async (req, res) => updateEntity(req, res, (await initORM()).serviceCatalogRepo, "ServiceCatalog"));
+router.patch("/service-catalog/:id", async (req, res) => patchEntity(req, res, (await initORM()).serviceCatalogRepo, "ServiceCatalog"));
+
 router.delete("/service-catalog/:id", async (req, res): Promise<any> => {
   try {
-    const { em, serviceCatalog } = await initORM();
+    const { em, serviceCatalogRepo } = await initORM();
     const serviceId = parseInt(req.params.id, 10);
 
     if (isNaN(serviceId)) {
       return res.status(400).json({ error: "ID service invalide" });
     }
 
-    const service = await serviceCatalog.findOne(serviceId);
+    const service = await serviceCatalogRepo.findOne(serviceId);
     if (!service) {
       return res.status(404).json({ error: "Service non trouvé" });
     }

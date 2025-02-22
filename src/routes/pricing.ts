@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { initORM } from "../config/db.js";
 import { Pricing } from "../modules/pricing/pricing.entity.js";
+import { updateEntity, patchEntity } from "../controllers/dataHandler.js";
 
 const router = Router();
 
@@ -45,6 +46,9 @@ router.get("/:price", async (req, res): Promise<any> => {
     return res.status(404).json({ error: "Prix non trouvé" });
   }
 });
+
+router.put("/pricing/:id", async (req, res) => updateEntity(req, res, (await initORM()).pricingRepo, "Pricing"));
+router.patch("/pricing/:id", async (req, res) => patchEntity(req, res, (await initORM()).pricingRepo, "Pricing"));
 
 router.delete("/pricing/:id", async (req, res): Promise<any> => {
   try {

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { initORM } from "../config/db.js";
 import { Model } from "../modules/model/model.entity.js"; 
+import { updateEntity, patchEntity } from "../controllers/dataHandler.js";
 
 const router = Router();
 
@@ -51,6 +52,9 @@ router.get("/:model", async (req, res): Promise<any> => {
     return res.status(404).json({ error: "Model non trouvé" });
   }
 });
+
+router.put("/models/:id", async (req, res) => updateEntity(req, res, (await initORM()).modelRepo, "Model"));
+router.patch("/models/:id", async (req, res) => patchEntity(req, res, (await initORM()).modelRepo, "Model"));
 
 router.delete("/models/:id", async (req, res): Promise<any> => {
   try {

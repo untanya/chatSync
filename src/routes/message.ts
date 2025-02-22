@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { initORM } from "../config/db.js";
-import { Message } from "../modules/message/message.entity.js"; 
+import { Message } from "../modules/message/message.entity.js";
+import { updateEntity, patchEntity } from "../controllers/dataHandler.js";
 
 const router = Router();
 
@@ -52,6 +53,9 @@ router.get("/:message", async (req, res): Promise<any> => {
     return res.status(404).json({ error: "Message non trouvé" });
   }
 });
+
+router.put("/messages/:id", async (req, res) => updateEntity(req, res, (await initORM()).messageRepo, "Message"));
+router.patch("/messages/:id", async (req, res) => patchEntity(req, res, (await initORM()).messageRepo, "Message"));
 
 router.delete("/messages/:id", async (req, res): Promise<any> => {
   try {
