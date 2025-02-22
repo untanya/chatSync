@@ -1,7 +1,13 @@
 import express from "express";
 import cors from "cors"; // Import de CORS
 import { initORM } from "./db.js"; // Connexion à MikroORM
+
 import userRoutes from "../routes/user.js"; // Import des routes (à créer plus tard)
+import messageRoutes from "../routes/message.js";
+import modelRoutes from "../routes/model.js";
+import pricingRoutes from "../routes/pricing.js";
+import serviceCatalogRoutes from "../routes/serviceCatalog.js";
+import conversationRoutes from "../routes/conversation.js";
 
 const app = express();
 
@@ -20,6 +26,11 @@ app.use(cors()); // Active CORS pour les requêtes cross-origin
 
     // 📌 Définition des routes
     app.use("/users", userRoutes);
+    app.use("/messages", messageRoutes);
+    app.use("/models", modelRoutes);
+    app.use("/pricings", pricingRoutes);
+    app.use("/service-catalogs", serviceCatalogRoutes);
+    app.use("/conversations", conversationRoutes);
 
   } catch (error) {
     console.error("❌ Erreur lors de l'initialisation :", error);

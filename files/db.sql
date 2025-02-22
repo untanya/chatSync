@@ -9,7 +9,7 @@
 CREATE TABLE message(
         id          Int  Auto_increment  NOT NULL ,
         content     Varchar (255) NOT NULL ,
-        timestamp   TimeStamp NOT NULL ,
+        created_at  Datetime NOT NULL ,
         read_at     Datetime ,
         status      ENUM('sent', 'delivered', 'read', 'failed') NOT NULL ,
         external_id Varchar (255),

@@ -5,9 +5,6 @@ import { Migrator } from '@mikro-orm/migrations';
 import { EntityGenerator } from '@mikro-orm/entity-generator';
 import { SeedManager } from '@mikro-orm/seeder';
 
-console.log(Number(process.env.DB_PORT));
-
-
 export default defineConfig({
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT) || 3306,
@@ -16,6 +13,7 @@ export default defineConfig({
   dbName: process.env.DB_NAME,
   entities: ['dist/**/*.entity.js'],
   entitiesTs: ['src/**/*.entity.ts'],
+  clientUrl: "mysql://root@mysqldb:3306/chat_sync",
   debug: true,
   highlighter: new SqlHighlighter(),
   metadataProvider: TsMorphMetadataProvider,

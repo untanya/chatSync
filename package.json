@@ -7,7 +7,18 @@
   "scripts": {
     "dev": "node --watch --loader ts-node/esm src/server.ts",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "biome:check": "biome check .",
+    "biome:fix": "biome check --write .",
+    "mikro:migrate:create": "npx mikro-orm-esm migration:create --config=./src/config/mikro-orm.config.ts",
+    "mikro:migrate:up": "npx mikro-orm-esm migration:up --config=./src/config/mikro-orm.config.ts",
+    "mikro:migrate:down": "npx mikro-orm-esm migration:down --config=./src/config/mikro-orm.config.ts",
+    "mikro:migrate:list": "npx mikro-orm-esm migration:list --config=./src/config/mikro-orm.config.ts",
+    "mikro:generate-entities": "npx mikro-orm-esm entity:generate --config=./src/config/mikro-orm.config.ts",
+    "mikro:seeder:generate": "npx mikro-orm-esm seeder:generate --config=./src/config/mikro-orm.config.ts",
+    "mikro:seeder:run": "npx mikro-orm-esm seeder:run --config=./src/config/mikro-orm.config.ts",
+    "mikro:debug": "npx mikro-orm-esm debug --config=./src/config/mikro-orm.config.ts",
+    "mikro:refresh": "npx mikro-orm-esm schema:drop --config=./src/config/mikro-orm.config.ts && npx mikro-orm-esm schema:create --config=./src/config/mikro-orm.config.ts && npx mikro-orm-esm migration:up --config=./src/config/mikro-orm.config.ts"
   },
   "repository": {
     "type": "git",
@@ -30,6 +41,7 @@
     "@types/cors": "^2.8.17",
     "adbkit": "^2.11.1",
     "axios": "^1.7.9",
+    "biome": "^0.3.3",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
