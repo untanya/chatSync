@@ -75,4 +75,26 @@ router.get("/:conversation", async (req, res): Promise<any> => {
   }
 });
 
+router.delete("/conversations/:id", async (req, res): Promise<any> => {
+  try {
+    const { em, conversationRepo } = await initORM();
+    const conversationId = parseInt(req.params.id, 10);
+
+    if (isNaN(conversationId)) {
+      return res.status(400).json({ error: "ID conversation invalide" });
+    }
+
+    const conversation = await conversationRepo.findOne(conversationId);
+    if (!conversation) {
+      return res.status(404).json({ error: "Conversation non trouvée" });
+    }
+
+    await em.removeAndFlush(conversation);
+    return res.json({ message: "Conversation supprimée avec succès" });
+  } catch (error) {
+    console.error("❌ Erreur lors de la suppression de la conversation :", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 export default router;

@@ -53,4 +53,26 @@ router.get("/:message", async (req, res): Promise<any> => {
   }
 });
 
+router.delete("/messages/:id", async (req, res): Promise<any> => {
+  try {
+    const { em, messageRepo } = await initORM();
+    const messageId = parseInt(req.params.id, 10);
+
+    if (isNaN(messageId)) {
+      return res.status(400).json({ error: "ID message invalide" });
+    }
+
+    const message = await messageRepo.findOne(messageId);
+    if (!message) {
+      return res.status(404).json({ error: "Message non trouvé" });
+    }
+
+    await em.removeAndFlush(message);
+    return res.json({ message: "Message supprimé avec succès" });
+  } catch (error) {
+    console.error("❌ Erreur lors de la suppression du message :", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 export default router;

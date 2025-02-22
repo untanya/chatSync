@@ -52,4 +52,26 @@ router.get("/:model", async (req, res): Promise<any> => {
   }
 });
 
+router.delete("/models/:id", async (req, res): Promise<any> => {
+  try {
+    const { em, modelRepo } = await initORM();
+    const modelId = parseInt(req.params.id, 10);
+
+    if (isNaN(modelId)) {
+      return res.status(400).json({ error: "ID modèle invalide" });
+    }
+
+    const model = await modelRepo.findOne(modelId);
+    if (!model) {
+      return res.status(404).json({ error: "Modèle non trouvé" });
+    }
+
+    await em.removeAndFlush(model);
+    return res.json({ message: "Modèle supprimé avec succès" });
+  } catch (error) {
+    console.error("❌ Erreur lors de la suppression du modèle :", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 export default router;

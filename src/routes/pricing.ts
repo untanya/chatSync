@@ -46,4 +46,26 @@ router.get("/:price", async (req, res): Promise<any> => {
   }
 });
 
+router.delete("/pricing/:id", async (req, res): Promise<any> => {
+  try {
+    const { em, pricingRepo } = await initORM();
+    const pricingId = parseInt(req.params.id, 10);
+
+    if (isNaN(pricingId)) {
+      return res.status(400).json({ error: "ID pricing invalide" });
+    }
+
+    const pricing = await pricingRepo.findOne(pricingId);
+    if (!pricing) {
+      return res.status(404).json({ error: "Pricing non trouvé" });
+    }
+
+    await em.removeAndFlush(pricing);
+    return res.json({ message: "Pricing supprimé avec succès" });
+  } catch (error) {
+    console.error("❌ Erreur lors de la suppression du pricing :", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 export default router;

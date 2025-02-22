@@ -46,4 +46,26 @@ router.get("/:service", async (req, res): Promise<any> => {
   }
 });
 
+router.delete("/service-catalog/:id", async (req, res): Promise<any> => {
+  try {
+    const { em, serviceCatalog } = await initORM();
+    const serviceId = parseInt(req.params.id, 10);
+
+    if (isNaN(serviceId)) {
+      return res.status(400).json({ error: "ID service invalide" });
+    }
+
+    const service = await serviceCatalog.findOne(serviceId);
+    if (!service) {
+      return res.status(404).json({ error: "Service non trouvé" });
+    }
+
+    await em.removeAndFlush(service);
+    return res.json({ message: "Service supprimé avec succès" });
+  } catch (error) {
+    console.error("❌ Erreur lors de la suppression du service :", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 export default router;

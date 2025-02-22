@@ -1,0 +1,107 @@
+### 📌 Créer un utilisateur
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "pseudo": "JohnDoe",
+  "base_city": "Paris",
+  "contact_info": "john@example.com",
+  "token": "abc123"
+}
+
+### 📌 Récupérer un utilisateur par ID
+GET http://localhost:8080/users/1
+
+### 📌 Modifier un utilisateur (PATCH - partiel)
+PATCH http://localhost:8080/users/1
+Content-Type: application/json
+
+{
+  "base_city": "Lyon"
+}
+
+### 📌 Remplacer un utilisateur (PUT - complet)
+PUT http://localhost:8080/users/1
+Content-Type: application/json
+
+{
+  "pseudo": "JohnDoeUpdated",
+  "base_city": "Marseille",
+  "contact_info": "john.new@example.com",
+  "token": "newtoken123"
+}
+
+### 📌 Supprimer un utilisateur
+DELETE http://localhost:8080/users/1
+
+---
+
+### **📌 Tests pour Model**
+POST http://localhost:8080/models
+Content-Type: application/json
+
+{
+  "pseudo": "ModelX",
+  "platform": "Instagram",
+  "profile_link": "https://instagram.com/modelx"
+}
+
+GET http://localhost:8080/models/1
+
+---
+
+### **📌 Tests pour Pricing**
+POST http://localhost:8080/pricing
+Content-Type: application/json
+
+{
+  "duration": 30,
+  "rate": 100
+}
+
+GET http://localhost:8080/pricing/1
+
+---
+
+### **📌 Tests pour Service Catalog**
+POST http://localhost:8080/service-catalog
+Content-Type: application/json
+
+{
+  "name": "Premium Service",
+  "service_rate": 200,
+  "id_pricing": 1,
+  "id_pricing_services_extra": null
+}
+
+GET http://localhost:8080/service-catalog/1
+
+---
+
+### **📌 Tests pour Conversations**
+POST http://localhost:8080/conversations
+Content-Type: application/json
+
+{
+  "from": 1,
+  "to": 2
+}
+
+GET http://localhost:8080/conversations/1
+
+---
+
+### **📌 Tests pour Messages**
+POST http://localhost:8080/messages
+Content-Type: application/json
+
+{
+  "content": "Hello, how are you?",
+  "timestamp": "2024-02-22T10:00:00.000Z",
+  "read_at": null,
+  "status": "sent",
+  "external_id": "msg_123",
+  "conversation_id": 1
+}
+
+GET http://localhost:8080/messages/1

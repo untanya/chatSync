@@ -114,5 +114,27 @@ router.get("/:user", async (req, res): Promise<any> => {
   }
 });
 
+router.delete("/users/:id", async (req, res): Promise<any> => {
+  try {
+    const { em, userRepo } = await initORM();
+    const userId = parseInt(req.params.id, 10);
+
+    if (isNaN(userId)) {
+      return res.status(400).json({ error: "ID utilisateur invalide" });
+    }
+
+    const user = await userRepo.findOne(userId);
+    if (!user) {
+      return res.status(404).json({ error: "Utilisateur non trouvé" });
+    }
+
+    await em.removeAndFlush(user);
+    return res.json({ message: "Utilisateur supprimé avec succès" });
+  } catch (error) {
+    console.error("❌ Erreur lors de la suppression de l'utilisateur :", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 
 export default router;
