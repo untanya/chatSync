@@ -13,5 +13,8 @@ export class ServicesCatalog {
     service_rate!: number;
 
     @ManyToOne(() => Pricing, { nullable: false })
-    pricing!: Pricing;
+    id_pricing!: Pricing;
+
+    @ManyToOne(() => Pricing, { nullable: true })
+    id_pricing_services_extra?: Pricing;
 }

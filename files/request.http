@@ -12,23 +12,23 @@ Content-Type: application/json
 ### 📌 Récupérer un utilisateur par ID
 GET http://localhost:8080/users/1
 
-### 📌 Modifier un utilisateur (PATCH - partiel)
-PATCH http://localhost:8080/users/1
-Content-Type: application/json
-
-{
-  "base_city": "Lyon"
-}
-
-### 📌 Remplacer un utilisateur (PUT - complet)
+### 📌 Modifier entièrement un utilisateur (PUT)
 PUT http://localhost:8080/users/1
 Content-Type: application/json
 
 {
-  "pseudo": "JohnDoeUpdated",
-  "base_city": "Marseille",
+  "pseudo": "UpdatedJohn",
+  "base_city": "Lyon",
   "contact_info": "john.new@example.com",
-  "token": "newtoken123"
+  "token": "newtoken456"
+}
+
+### 📌 Modifier partiellement un utilisateur (PATCH)
+PATCH http://localhost:8080/users/1
+Content-Type: application/json
+
+{
+  "base_city": "Marseille"
 }
 
 ### 📌 Supprimer un utilisateur
@@ -36,22 +36,71 @@ DELETE http://localhost:8080/users/1
 
 ---
 
-### **📌 Tests pour Model**
+### 📌 Créer un modèle
 POST http://localhost:8080/models
 Content-Type: application/json
 
 {
-  "pseudo": "ModelX",
-  "platform": "Instagram",
-  "profile_link": "https://instagram.com/modelx"
+    "pseudo": "ModelX",
+    "platform": "SMS",
+    "profile_link": "http://disabled",
+    "cup": "90D",
+    "public_state": "Shaved",
+    "nationality": "Française",
+    "ethnicity": "Caucasienne",
+    "languages": "Français",
+    "contact_method": "SMS",
+    "base_city": "Grenoble",
+    "contact_info": "+33732454592",
+    "work_location": "Grenoble",
+    "pricing": {
+        "model": "ModelX",
+        "pricing": {
+            "duration": 60,
+            "rate": 150,
+            "services": 1,
+            "extra_services": 2
+        }
+    }
 }
 
-GET http://localhost:8080/models/1
+### 📌 Récupérer un modèle par ID
+GET http://localhost:8080/models/2
+
+### 📌 Modifier entièrement un modèle (PUT)
+PUT http://localhost:8080/models/2
+Content-Type: application/json
+
+{
+    "pseudo": "ModelXY",
+    "platform": "SMS",
+    "profile_link": "http://disabled.com",
+    "cup": "90D",
+    "public_state": "Shaved",
+    "nationality": "Française",
+    "ethnicity": "Caucasienne",
+    "languages": "Français",
+    "contact_method": "SMS",
+    "base_city": "Grenoble",
+    "contact_info": "+33732454529",
+    "work_location": "Grenoble"
+}
+
+### 📌 Modifier partiellement un modèle (PATCH)
+PATCH http://localhost:8080/models/2
+Content-Type: application/json
+
+{
+  "platform": "Telegram"
+}
+
+### 📌 Supprimer un modèle
+DELETE http://localhost:8080/models/2
 
 ---
 
-### **📌 Tests pour Pricing**
-POST http://localhost:8080/pricing
+### 📌 Créer un pricing
+POST http://localhost:8080/pricings
 Content-Type: application/json
 
 {
@@ -59,49 +108,151 @@ Content-Type: application/json
   "rate": 100
 }
 
-GET http://localhost:8080/pricing/1
+### 📌 Récupérer un pricing par ID
+GET http://localhost:8080/pricings/1
 
----
-
-### **📌 Tests pour Service Catalog**
-POST http://localhost:8080/service-catalog
+### 📌 Modifier entièrement un pricing (PUT)
+PUT http://localhost:8080/pricings/1
 Content-Type: application/json
 
 {
-  "name": "Premium Service",
-  "service_rate": 200,
-  "id_pricing": 1,
-  "id_pricing_services_extra": null
+    "duration": 60,
+    "rate": 200
 }
 
-GET http://localhost:8080/service-catalog/1
+### 📌 Modifier partiellement un pricing (PATCH)
+PATCH http://localhost:8080/pricings/1
+Content-Type: application/json
+
+{
+    "rate": 250
+}
+
+### 📌 Supprimer un pricing
+DELETE http://localhost:8080/pricings/1
 
 ---
 
-### **📌 Tests pour Conversations**
+### 📌 Créer un service dans le catalogue
+POST http://localhost:8080/service-catalogs
+Content-Type: application/json
+
+{
+    "name": "Fellation",
+    "service_rate": 0,
+    "id_pricing": { "id": 1, "duration": 60, "rate": 20 },
+    "id_pricing_services_extra": { "id": 2, "duration": 60, "rate": 20 }
+}
+
+### 📌 Récupérer un service du catalogue par ID
+GET http://localhost:8080/service-catalogs/2
+
+### 📌 Modifier entièrement un service (PUT)
+PUT http://localhost:8080/service-catalogs/2
+Content-Type: application/json
+
+{
+  "name": "Fellation nature",
+  "service_rate": 50,
+  "id_pricing": 2,
+  "id_pricing_services_extra": 2
+}
+
+### 📌 Modifier partiellement un service (PATCH)
+PATCH http://localhost:8080/service-catalogs/2
+Content-Type: application/json
+
+{
+  "service_rate": 20
+}
+
+### 📌 Supprimer un service du catalogue
+DELETE http://localhost:8080/service-catalogs/2
+
+---
+
+### 📌 Créer une conversation
 POST http://localhost:8080/conversations
 Content-Type: application/json
 
 {
-  "from": 1,
-  "to": 2
+    "from": 3,
+    "to": 8,
+    "messages": { 
+        "content": "Hello", 
+        "created_at": "2024-02-22T10:00:00.000Z", 
+        "read_at": null, 
+        "status": "sent" 
+    }
 }
 
-GET http://localhost:8080/conversations/1
+### 📌 Récupérer une conversation par ID
+GET http://localhost:8080/conversations/3
+
+### 📌 Modifier entièrement une conversation (PUT)
+PUT http://localhost:8080/conversations/1
+Content-Type: application/json
+
+{
+    "from": 3,
+    "to": 8,
+    "message": { 
+        "content": "Hello", 
+        "created_at": "2024-02-22T10:00:00.000Z", 
+        "read_at": "2024-02-22T11:00:00.000Z", 
+        "status": "read" 
+    }
+}
+
+### 📌 Modifier partiellement une conversation (PATCH)
+PATCH http://localhost:8080/conversations/1
+Content-Type: application/json
+
+{
+    "to": 5
+}
+
+### 📌 Supprimer une conversation
+DELETE http://localhost:8080/conversations/4
 
 ---
 
-### **📌 Tests pour Messages**
+### 📌 Créer un message
 POST http://localhost:8080/messages
 Content-Type: application/json
 
 {
   "content": "Hello, how are you?",
-  "timestamp": "2024-02-22T10:00:00.000Z",
+  "created_at": "2024-02-22T10:00:00.000Z",
   "read_at": null,
   "status": "sent",
   "external_id": "msg_123",
-  "conversation_id": 1
+  "conversation": 5
 }
 
-GET http://localhost:8080/messages/1
+### 📌 Récupérer un message par ID
+GET http://localhost:8080/messages/4
+
+### 📌 Modifier entièrement un message (PUT)
+PUT http://localhost:8080/messages/4
+Content-Type: application/json
+
+{
+    "content": "Updated message content",
+    "created_at": "2025-02-23T14:00:00Z",
+    "read_at": "2025-02-23T15:00:00Z",
+    "status": "read",
+    "external_id": "msg_456",
+    "conversation_id": 5
+}
+
+### 📌 Modifier partiellement un message (PATCH)
+PATCH http://localhost:8080/messages/4
+Content-Type: application/json
+
+{
+  "status": "delivered"
+}
+
+### 📌 Supprimer un message
+DELETE http://localhost:8080/messages/4

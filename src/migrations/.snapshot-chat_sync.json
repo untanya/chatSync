@@ -66,6 +66,76 @@
           "nullable": false,
           "length": 255,
           "mappedType": "string"
+        },
+        "nationality": {
+          "name": "nationality",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "ethnicity": {
+          "name": "ethnicity",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "languages": {
+          "name": "languages",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "contact_method": {
+          "name": "contact_method",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "base_city": {
+          "name": "base_city",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "contact_info": {
+          "name": "contact_info",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "work_location": {
+          "name": "work_location",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
         }
       },
       "name": "model",
@@ -262,13 +332,23 @@
           "length": null,
           "mappedType": "integer"
         },
-        "pricing_id": {
-          "name": "pricing_id",
+        "id_pricing_id": {
+          "name": "id_pricing_id",
           "type": "int",
           "unsigned": true,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        },
+        "id_pricing_services_extra_id": {
+          "name": "id_pricing_services_extra_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
           "length": null,
           "mappedType": "integer"
         }
@@ -277,10 +357,20 @@
       "indexes": [
         {
           "columnNames": [
-            "pricing_id"
+            "id_pricing_id"
           ],
           "composite": false,
-          "keyName": "services_catalog_pricing_id_index",
+          "keyName": "services_catalog_id_pricing_id_index",
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "columnNames": [
+            "id_pricing_services_extra_id"
+          ],
+          "composite": false,
+          "keyName": "services_catalog_id_pricing_services_extra_id_index",
           "constraint": false,
           "primary": false,
           "unique": false
@@ -298,16 +388,29 @@
       ],
       "checks": [],
       "foreignKeys": {
-        "services_catalog_pricing_id_foreign": {
-          "constraintName": "services_catalog_pricing_id_foreign",
+        "services_catalog_id_pricing_id_foreign": {
+          "constraintName": "services_catalog_id_pricing_id_foreign",
           "columnNames": [
-            "pricing_id"
+            "id_pricing_id"
           ],
           "localTableName": "services_catalog",
           "referencedColumnNames": [
             "id"
           ],
           "referencedTableName": "pricing",
+          "updateRule": "cascade"
+        },
+        "services_catalog_id_pricing_services_extra_id_foreign": {
+          "constraintName": "services_catalog_id_pricing_services_extra_id_foreign",
+          "columnNames": [
+            "id_pricing_services_extra_id"
+          ],
+          "localTableName": "services_catalog",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "pricing",
+          "deleteRule": "set null",
           "updateRule": "cascade"
         }
       },
@@ -576,6 +679,7 @@
           "primary": false,
           "nullable": false,
           "length": null,
+          "default": "CURRENT_TIMESTAMP",
           "mappedType": "datetime"
         },
         "read_at": {

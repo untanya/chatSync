@@ -23,10 +23,31 @@ export class Model {
   
     @Property()
     cup!: string;
-  
+
     @Property()
     public_state!: string;
+
+    @Property()
+    nationality!: string;
+
+    @Property()
+    ethnicity!: string;
+  
+    @Property()
+    languages!: string;
+
+    @Property()
+    contact_method!: string;
+
+    @Property()
+    base_city!: string;
+
+    @Property()
+    contact_info!: string;
+  
+    @Property()
+    work_location!: string;
   
     @OneToMany(() => AppliesPricing, appliesPricing => appliesPricing.model)
-    pricing = new Collection<AppliesPricing>(this);
+    pricing ?= new Collection<AppliesPricing>(this);
 }

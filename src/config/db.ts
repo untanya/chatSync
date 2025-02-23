@@ -39,16 +39,17 @@ export async function initORM(options?: Options): Promise<Services> {
   while (retries > 0) {
     try {
       const orm = await MikroORM.init(options ?? config);
+      const em = orm.em.fork();
       cache = {
         orm,
-        em: orm.em.fork(),
-        userRepo: orm.em.getRepository(User),
-        messageRepo: orm.em.getRepository(Message),
-        conversationRepo: orm.em.getRepository(Conversation),
-        appliesPricingRepo: orm.em.getRepository(AppliesPricing),
-        modelRepo: orm.em.getRepository(Model),
-        pricingRepo: orm.em.getRepository(Pricing),
-        serviceCatalogRepo: orm.em.getRepository(ServicesCatalog),
+        em,
+        userRepo: em.getRepository(User),
+        messageRepo: em.getRepository(Message),
+        conversationRepo: em.getRepository(Conversation),
+        appliesPricingRepo: em.getRepository(AppliesPricing),
+        modelRepo: em.getRepository(Model),
+        pricingRepo: em.getRepository(Pricing),
+        serviceCatalogRepo: em.getRepository(ServicesCatalog),
       };
       logger.info("✅ MikroORM initialisé avec succès !");
       return cache;

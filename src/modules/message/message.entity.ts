@@ -9,8 +9,8 @@ export class Message {
     @Property( { nullable:false } )
     content!: string;
 
-    @Property()
-    created_at = new Date();
+    @Property({ type: "datetime", defaultRaw: "CURRENT_TIMESTAMP" })
+    created_at!: Date;
 
     @Property({ type: "datetime", nullable: true })
     read_at!: DateTimeType;

@@ -12,6 +12,9 @@ export class Pricing {
     @Property()
     rate!: number;
 
-    @OneToMany(() => ServicesCatalog, servicesCatalog => servicesCatalog.pricing)
+    @OneToMany(() => ServicesCatalog, servicesCatalog => servicesCatalog.id_pricing)
     services = new Collection<ServicesCatalog>(this);
+
+    @OneToMany(() => ServicesCatalog, servicesCatalog => servicesCatalog.id_pricing_services_extra)
+    extra_services = new Collection<ServicesCatalog>(this);
 }
