@@ -1,6 +1,8 @@
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
     container_name: chatsync-app
     depends_on:
       - mysqldb
@@ -16,15 +18,32 @@ services:
     ports:
       - "8080:8080"
       - "9229:9229"
-    tty: true
     volumes:
       - .:/app
       - /app/node_modules
-    entrypoint: npm run dev
     networks:
       - app-network
     restart: always
-  
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: chatsync-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - app
+    networks:
+      - app-network
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    command: npm run --prefix frontend preview -- --port 3000
+
   mysqldb:
     image: mysql:8.0
     container_name: mysqldb

@@ -1,0 +1,17 @@
+{
+    "name": "backend",
+    "version": "1.0.0",
+    "scripts": {
+        "build": "tsc"
+    },
+    "devDependencies": {
+        "@mikro-orm/cli": "^6.4.7",
+        "typescript": "^5.7.3",
+        "@types/express": "^5.0.0",
+        "@types/luxon": "^3.4.2",
+        "@types/node": "^22.13.4",
+        "concurrently": "^9.1.2",
+        "nodemon": "^3.1.9",
+        "ts-node": "^10.9.2"
+    }
+}

@@ -8,6 +8,7 @@ import modelRoutes from "../routes/model.js";
 import pricingRoutes from "../routes/pricing.js";
 import serviceCatalogRoutes from "../routes/serviceCatalog.js";
 import conversationRoutes from "../routes/conversation.js";
+import path from "node:path";
 
 const app = express();
 
@@ -22,7 +23,22 @@ app.use(cors()); // Active CORS pour les requêtes cross-origin
 
     app.get("/", (req, res) => {
         res.json({ message: "🚀 ChatSync API is running!" });
+    });
+
+    // Test API
+    app.get("/api/test", (req, res) => {
+      res.json({ message: "API en TypeScript fonctionne !" });
+    });
+
+    // En mode production, servir React
+    if (process.env.NODE_ENV === "production") {
+      const frontendPath = path.resolve("frontend", "build");
+      app.use(express.static(frontendPath));
+
+      app.get("*", (req, res) => {
+        res.sendFile(path.join(frontendPath, "index.html"));
       });
+    }
 
     // 📌 Définition des routes
     app.use("/users", userRoutes);
