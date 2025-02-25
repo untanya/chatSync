@@ -37,12 +37,14 @@ services:
     networks:
       - app-network
     volumes:
-      - .:/app
-      - /app/node_modules
+      - ./frontend:/app/frontend
+      - /app/frontend/node_modules  # Éviter d'écraser node_modules
+      - ./frontend/dist:/app/frontend/dist  # Stocker le build localement
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
       - PORT=3000
-    command: npm run --prefix frontend preview -- --port 3000
+    command: npm run dev --prefix .
+
 
   mysqldb:
     image: mysql:8.0
